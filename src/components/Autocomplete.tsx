@@ -101,7 +101,7 @@ const Autocomplete = ({ data }: any) => {
         value={inputValue}
         onChange={handleChange}
         placeholder="Type a name..."
-        className="text-black border-2 border-black w-full h-10 rounded-md p-2 relative focus:border-blue-500 "
+        className="text-black border-2 border-black w-full max-w-[370px] h-10 rounded-md p-2 relative focus:border-blue-500 "
         onKeyDown={handleKeyDown}
       />
       <div className="h-full max-h-[300px] overflow-auto w-full z-50">
