@@ -18,7 +18,7 @@ export default async function Home() {
         alt=""
         className="absolute h-full w-full object-fill z-0"
       /> */}
-      <div className="z-50">
+      <div className="z-50 pt-20">
         <Autocomplete data={allD} />
       </div>
     </div>
