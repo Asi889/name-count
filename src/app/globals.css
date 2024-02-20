@@ -31,3 +31,23 @@ body {
     text-wrap: balance;
   }
 }
+
+.background {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.left {
+  background-color: pink;
+  width: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.right {
+  background-color: blue;
+  width: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
