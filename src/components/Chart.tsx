@@ -21,6 +21,7 @@ export default function Chart({ m, f }: any) {
       ]}
       xAxis={[{ data: xLabels, scaleType: "band" }]}
       leftAxis={null}
+      // layout="horizontal"
     />
   );
 }

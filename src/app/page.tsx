@@ -13,12 +13,7 @@ export default async function Home() {
 
   return (
     <div className="text-center w-full h-screen">
-      {/* <img
-        src={bg.src}
-        alt=""
-        className="absolute h-full w-full object-fill z-0"
-      /> */}
-      <div className="z-50 pt-20">
+      <div className="z-50 pt-20 px-6">
         <Autocomplete data={allD} />
       </div>
     </div>
