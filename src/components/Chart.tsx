@@ -1,27 +1,31 @@
 "use client";
-import * as React from "react";
+import React, { use, useEffect, useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
-export default function Chart({ m, f }: any) {
-  const uData = [0, f];
-  const pData = [m, 0];
-  const xLabels = ["\u2642", "\u2640"];
-  const jj = m ? m.toString() : "0";
-  const cc = f ? f.toString() : "0";
+export default function Chart(chartData: any) {
+  const [data, setData] = useState([]);
 
-  //   console.log(f);
+  const valueFormatter = (value: number) => `${value}`;
+
+  useEffect(() => {
+    const sliced = chartData.chartData.slice(0, -1);
+    setData(sliced);
+  }, [chartData]);
 
   return (
-    <BarChart
-      width={500}
-      height={300}
-      series={[
-        { data: pData, label: jj, id: "pvId", color: "#2E96FF" },
-        { data: uData, label: cc, id: "uvId", color: "#FF9DA7" },
-      ]}
-      xAxis={[{ data: xLabels, scaleType: "band" }]}
-      leftAxis={null}
-      // layout="horizontal"
-    />
+    <div className="w-full max-w-xl overflow-auto">
+      {data.length > 0 ? (
+        <BarChart
+          className="w-full"
+          height={150}
+          dataset={data}
+          xAxis={[{ scaleType: "band", dataKey: "data" }]}
+          series={[{ dataKey: "label", valueFormatter }]}
+          leftAxis={null}
+        />
+      ) : (
+        ""
+      )}
+    </div>
   );
 }
