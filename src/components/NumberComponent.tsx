@@ -8,29 +8,25 @@ const NumberComponent: React.FC<NumberComponentProps> = ({ value }) => {
   const [currentValue, setCurrentValue] = useState(0);
 
   useEffect(() => {
-    const diff = value - currentValue;
-    const step = Math.sign(diff) * Math.ceil(Math.abs(diff) / 10);
-    const duration = 500; // Animation duration in milliseconds
-    const steps = Math.ceil(duration / 16); // Number of steps to complete the animation in 500ms
+    let targetValue = value;
+    if (targetValue < 0) targetValue = 0;
+    if (targetValue > 99) targetValue = 99;
 
-    let currentStep = 0;
+    const increment = targetValue > currentValue ? 1 : -1;
     const interval = setInterval(() => {
       setCurrentValue((prevValue) => {
-        currentStep++;
-        if (currentStep >= steps) {
+        if (prevValue === targetValue) {
           clearInterval(interval);
-          return value;
         }
-        return prevValue + step;
+        return prevValue + increment;
       });
-    }, duration / steps);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [value]);
-
   return (
-    <div className="number-component">
-      <span>{currentValue}</span>
+    <div className="number-component z-[99999] text-2xl font-semibold grid justify-center items-center">
+      <span>{Math.round(currentValue)}%</span>
     </div>
   );
 };

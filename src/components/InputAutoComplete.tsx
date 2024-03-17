@@ -1,38 +1,55 @@
-import React from "react";
+import { AllNames } from "@/types/types";
+import React, { ChangeEventHandler, KeyboardEventHandler } from "react";
 
-function InputAutoComplete(props: any) {
-  const { inputValue, handleChange, suggestions, handleKeyDown, handleClick } =
-    props;
+function InputAutoComplete({
+  inputValue,
+  suggestions,
+  data,
+  handleClick,
+  setInputFlag,
+  handleChange,
+  handleKeyDown,
+}: {
+  inputValue: string;
+  suggestions: string[];
+  data: AllNames;
+  handleClick: Function;
+  setInputFlag: Function;
+  handleChange: Function;
+  handleKeyDown: Function;
+}) {
   return (
-    <div className="grid justify-center w-fit mx-auto relative">
+    <div
+      className={`flex justify-center relative transition-all duration-1000 ease-in w-full max-w-[320px] mx-auto`}
+    >
       <input
         type="text"
+        onFocus={() => setInputFlag(true)}
         value={inputValue}
-        onChange={handleChange}
+        onChange={handleChange as ChangeEventHandler<HTMLInputElement>}
         placeholder="... הקלד שם כאן"
-        className={`text-black   w-full  h-10 ${
+        className={`text-black z-50  w-full  h-14 ${
           inputValue ? "rounded-t-xl" : "rounded-xl"
-        }  p-2 relative focus:outline-none mt-10 text-right `}
-        onKeyDown={handleKeyDown}
+        }  p-2  focus:outline-none text-right `}
+        onKeyDown={handleKeyDown as KeyboardEventHandler<HTMLInputElement>}
       />
       {inputValue && (
         <div
-          className={`h-full max-h-[300px] overflow-auto w-full z-50 absolute -bottom-[100%]  bg-white focus:border-2 border-white mx-auto  ${
+          className={`h-[250%] overflow-auto w-full z-50 transition-all absolute -bottom-[250%] duration-500 ease-in  bg-white focus:border-2 border-white mx-auto  ${
             inputValue ? "rounded-b-xl" : "rounded-xl"
           }`}
         >
-          <ul className={`z-50   ${inputValue ? "" : ""}`}>
-            {inputValue &&
-              suggestions?.map((item: any) => (
-                <li
-                  className="pt-2"
-                  key={item}
-                  onClick={() => handleClick(item)}
-                >
-                  {item}
-                </li>
-              ))}
-          </ul>
+          {inputValue &&
+            suggestions?.map((item: any) => {
+              return (
+                <div className="flex gap-x-4 justify-between px-2" key={item}>
+                  <div className="text-gray-500">{data[item]?.total}</div>
+                  <div className="" onClick={() => handleClick(item)}>
+                    {item}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       )}
     </div>

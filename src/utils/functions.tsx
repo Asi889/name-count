@@ -25,5 +25,5 @@ export function percentSplit(num1: number, num2: number) {
   if (num1 === 0 && num2 === 0) {
     return [0, 0];
   }
-  return [percent1, percent2];
+  return [percent1.toString(), percent2.toString()];
 }

@@ -3,7 +3,7 @@ const ProgressBar = (props: any) => {
 
   const fillerStyles = {
     height: "100%",
-    width: `${completed ? completed : ""}%`,
+    width: `${completed ? "100" : "0"}%`,
     transition: "width 1s ease-in-out",
     backgroundColor: bgcolor,
     borderRadius: "inherit",
@@ -19,7 +19,7 @@ const ProgressBar = (props: any) => {
 
   return (
     <div
-      className={`bg-gray-400 rounded-2xl w-full h-5 flex ${
+      className={`bg-gray-700 rounded-2xl w-full h-5 flex  ${
         male && completed ? "justify-end " : "justify-start"
       }`}
     >

@@ -1,18 +1,14 @@
-import { promises as fs } from "fs";
 import Container from "@/components/Container";
+import { gernateData } from "@/utils/getAllData";
 
 export default async function Home() {
-  const jwomen = await fs.readFile(process.cwd() + "/data/jf.json", "utf8");
-  const jewishWomen = JSON.parse(jwomen);
-  const men = await fs.readFile(process.cwd() + "/data/jm.json", "utf8");
-  const jMen = JSON.parse(men);
-  const allD = [...jMen, ...jewishWomen];
+  const data = await gernateData();
 
   return (
-    <div className="text-center w-full h-screen">
-      <div className="z-50 pt-20 px-6">
-        <Container data={allD} />
-      </div>
+    <div className="text-center w-full h-screen overflow-x-hidden bg-[#C9D9DA]">
+      {/* <div className="z-50 pt-20 px-6"> */}
+      <Container data={data.allData} names={data.names} />
+      {/* </div> */}
     </div>
   );
 }
