@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { percentSplit } from "../utils/functions";
 import BothBars from "./BothBars";
 import InputAutoComplete from "./InputAutoComplete";
