@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { percentSplit } from "../utils/functions";
+import { percentSplit, setName } from "../utils/functions";
 import BothBars from "./BothBars";
 import InputAutoComplete from "./InputAutoComplete";
 import { AllNames, Percent } from "@/types/types";
@@ -10,15 +10,6 @@ import BackGroundImages from "./BackGroundImages";
 import TheChart from "./TheChart";
 
 const Container = ({ data, names }: { data: AllNames; names: string[] }) => {
-  const searchParams = useSearchParams();
-
-  const setName = (value: string) => {
-    window.history.replaceState(
-      {},
-      "",
-      `${window.location.pathname}?name=${value}`
-    );
-  };
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestions, setSuggestions] = useState<[string] | []>([]);
   const [mCount, setMCount] = useState<number>(0);
@@ -26,8 +17,8 @@ const Container = ({ data, names }: { data: AllNames; names: string[] }) => {
   const [percent, setPercent] = useState<Percent | []>([]);
   const [inputFlag, setInputFlag] = useState<boolean>(false);
   const [secondeInputFlag, setSecondeInputFlag] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const nameParam = searchParams.get("name") ?? "";
-  const [selectedName, setSelectedName] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSecondeInputFlag(true);
@@ -41,7 +32,6 @@ const Container = ({ data, names }: { data: AllNames; names: string[] }) => {
 
   const handleClick = (name: string) => {
     setName(name);
-    setSelectedName(name);
     const menCount = data[name ? name : inputValue]?.male?.count ?? 0;
     const womenCount = data[name ? name : inputValue]?.female?.count ?? 0;
     setMCount(menCount);
@@ -55,6 +45,10 @@ const Container = ({ data, names }: { data: AllNames; names: string[] }) => {
       handleClick(inputValue);
     }
   };
+
+  const returnChart = useMemo(() => {
+    return <TheChart chartData={data} />;
+  }, [fCount, mCount]);
 
   useEffect(() => {
     if (nameParam) {
@@ -107,7 +101,7 @@ const Container = ({ data, names }: { data: AllNames; names: string[] }) => {
               <br />
               tt
             </div>
-            <TheChart chartData={data} />
+            {returnChart}
           </div>
         </div>
       </div>

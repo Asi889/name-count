@@ -35,4 +35,7 @@ export type Name = {
 export type AllNames = {
   [name: string]: Name;
 };
+
 export type Percent = string[];
+
+export type TotalObject = { total: number };

@@ -20,7 +20,7 @@ const NumberComponent: React.FC<NumberComponentProps> = ({ value }) => {
         }
         return prevValue + increment;
       });
-    }, 50);
+    }, 5);
 
     return () => clearInterval(interval);
   }, [value]);

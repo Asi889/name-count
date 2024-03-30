@@ -1,8 +1,9 @@
+// "use client";
 import Container from "@/components/Container";
 import { gernateData } from "@/utils/getAllData";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
-export default async function Home() {
+export default async function page({ params }: { params: { id: string } }) {
   const data = (await gernateData()) ?? {
     allData: [],
     names: [],
