@@ -30,7 +30,10 @@ function TheChart({ chartData }: { chartData: AllNames }) {
   );
 
   return (
-    <div className="max-w-[500px] w-full max-h-600 md:max-w-[700px] md:max-h-400 overflow-x-scroll h-full mx-auto bg-white ">
+    <div
+      dir="ltr"
+      className="max-w-[500px] w-full max-h-600 md:max-w-[700px] md:max-h-400 overflow-x-scroll h-full mx-auto bg-white "
+    >
       <div className="flex h-full w-full relative">
         {years.reverse().map((year, index) => {
           const hh =

@@ -1,4 +1,4 @@
-import { AllNames, Person, TotalObject } from "@/types/types";
+import { AllNames, Percent, Person, TotalObject } from "@/types/types";
 
 export function getUniqueNames(arr: any) {
   const uniqueNames = new Set();
@@ -17,13 +17,13 @@ export function getUniqueNames(arr: any) {
   return result;
 }
 
-export function percentSplit(num1: number, num2: number) {
+export function percentSplit(num1: number, num2: number): Percent {
   const total = num1 + num2;
   const percent1 = Math.round((num1 / total) * 100) + "";
   const percent2 = Math.round((num2 / total) * 100) + "";
 
   if (num1 === 0 && num2 === 0) {
-    return [0, 0];
+    return [`0`, `0`];
   }
   return [percent1.toString(), percent2.toString()];
 }

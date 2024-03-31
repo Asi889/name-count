@@ -1,57 +1,85 @@
+"use client";
+
 import { AllNames } from "@/types/types";
-import React, { ChangeEventHandler, KeyboardEventHandler } from "react";
+import { useSearchParams } from "next/navigation";
+import React, {
+  ChangeEventHandler,
+  KeyboardEventHandler,
+  useState,
+} from "react";
 
 function InputAutoComplete({
-  inputValue,
-  suggestions,
   data,
-  handleClick,
-  setInputFlag,
-  handleChange,
-  handleKeyDown,
+  handleNameSelect,
+  names,
 }: {
-  inputValue: string;
-  suggestions: string[];
+  names: string[];
   data: AllNames;
-  handleClick: Function;
-  setInputFlag: Function;
-  handleChange: Function;
-  handleKeyDown: Function;
+  handleNameSelect: (name: string) => void;
 }) {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<[string] | []>([]);
+
+  const nameSelectCallback = (name: string) => {
+    if (!names.includes(name)) return;
+    handleNameSelect(name);
+    setInputValue("");
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && suggestions.length > 0) {
+      nameSelectCallback(inputValue);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    setInputValue(value);
+    const filteredSuggestions = names.filter((item) =>
+      item.toLowerCase().startsWith(value)
+    );
+    setSuggestions(filteredSuggestions as [string]);
+  };
   return (
     <div
       className={`flex justify-center relative transition-all duration-1000 ease-in w-full max-w-[320px] mx-auto`}
     >
       <input
         type="text"
-        onFocus={() => setInputFlag(true)}
         value={inputValue}
-        onChange={handleChange as ChangeEventHandler<HTMLInputElement>}
-        placeholder="... הקלד שם כאן"
+        onChange={handleChange}
+        placeholder="הזינו שם פרטי..."
         className={`text-black z-50  w-full  h-14 ${
           inputValue ? "rounded-t-xl" : "rounded-xl"
         }  p-2  focus:outline-none text-right `}
         onKeyDown={handleKeyDown as KeyboardEventHandler<HTMLInputElement>}
       />
-      {inputValue && (
-        <div
+      {inputValue ? (
+        <ol
           className={`h-[250%] overflow-auto w-full z-50 transition-all absolute -bottom-[250%] duration-500 ease-in  bg-white focus:border-2 border-white mx-auto  ${
             inputValue ? "rounded-b-xl" : "rounded-xl"
           }`}
         >
           {inputValue &&
-            suggestions?.map((item: any) => {
+            suggestions?.map((suggestion) => {
               return (
-                <div className="flex gap-x-4 justify-between px-2" key={item}>
-                  <div className="text-gray-500">{data[item]?.total}</div>
-                  <div className="" onClick={() => handleClick(item)}>
-                    {item}
-                  </div>
-                </div>
+                <li
+                  className="flex gap-x-4 justify-between px-2"
+                  key={suggestion}
+                >
+                  <span
+                    className=""
+                    onClick={() => nameSelectCallback(suggestion)}
+                  >
+                    {suggestion}
+                  </span>
+                  <span className="text-gray-500">
+                    {data[suggestion]?.total}
+                  </span>
+                </li>
               );
             })}
-        </div>
-      )}
+        </ol>
+      ) : null}
     </div>
   );
 }

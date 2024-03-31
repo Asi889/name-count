@@ -1,5 +1,5 @@
 // "use client";
-import Container from "@/components/Container";
+import FrontPage from "@/components/FrontPage";
 import { gernateData } from "@/utils/getAllData";
 import React, { Suspense } from "react";
 
@@ -12,7 +12,7 @@ export default async function page({ params }: { params: { id: string } }) {
   return (
     <div className="text-center w-full h-screen overflow-x-hidden bg-[#C9D9DA]">
       <Suspense>
-        <Container data={data.allData} names={data.names} />
+        <FrontPage data={data.allData} names={data.names} />
       </Suspense>
     </div>
   );
