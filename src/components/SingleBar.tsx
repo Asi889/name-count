@@ -9,7 +9,7 @@ function SingleBar({ height1, type }: { height1: string; type: string }) {
           className={` ${
             type === "male" ? "bg-[#0099FF]" : "bg-[#FA2469]"
           } w-full  rounded-t-2xl bottom-0 border-inherit absolute transition-all duration-1000 ease-in-out`}
-        />
+        ></div>
       </div>
     </div>
   );

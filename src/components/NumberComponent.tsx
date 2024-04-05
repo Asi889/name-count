@@ -25,7 +25,7 @@ const NumberComponent: React.FC<NumberComponentProps> = ({ value }) => {
     return () => clearInterval(interval);
   }, [value]);
   return (
-    <div className="number-component z-[99999] text-2xl font-semibold grid justify-center items-center">
+    <div className="number-component text-2xl font-semibold grid justify-center items-center z-20">
       <span>{Math.round(currentValue)}%</span>
     </div>
   );

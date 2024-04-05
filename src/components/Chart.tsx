@@ -8,16 +8,6 @@ export default function Chart(chartData: any, name: string) {
   const searchParams = useSearchParams();
   const nameParam = searchParams.get("name") ?? ("" as any);
   const nn = nameParam.length > 0 ? nameParam : name;
-  console.log("nameParam");
-  console.log(name);
-
-  const __DATA__ = [
-    { distance: 13, colors: ["#ffd847", "#e0a106"] },
-    { distance: 20, colors: ["#ff47ab", "#e0064e"] },
-    { distance: 16, colors: ["#add9c0", "#1da890"] },
-    { distance: 30, colors: ["#cbd9ad", "#7ca81d"] },
-    { distance: 22, colors: ["#d9c1ad", "#714511"] },
-  ];
 
   const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];

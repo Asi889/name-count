@@ -1,29 +1,20 @@
 "use client";
 
-import { AllNames } from "@/types/types";
-import { useSearchParams } from "next/navigation";
-import React, {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  useState,
-} from "react";
+import { useAppState } from "@/store/hooks";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
-function InputAutoComplete({
-  data,
-  handleNameSelect,
-  names,
-}: {
-  names: string[];
-  data: AllNames;
-  handleNameSelect: (name: string) => void;
-}) {
+function InputAutoComplete() {
+  const { names, allData } = useAppState();
+  // log
   const [inputValue, setInputValue] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<[string] | []>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const router = useRouter();
 
   const nameSelectCallback = (name: string) => {
     if (!names.includes(name)) return;
-    handleNameSelect(name);
     setInputValue("");
+    router.push(`/${name}`);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && suggestions.length > 0) {
@@ -34,10 +25,11 @@ function InputAutoComplete({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
     setInputValue(value);
-    const filteredSuggestions = names.filter((item) =>
-      item.toLowerCase().startsWith(value)
-    );
-    setSuggestions(filteredSuggestions as [string]);
+    const filteredSuggestions = names
+      .filter((item) => item.trim().toLowerCase().startsWith(value))
+      .sort((a, b) => allData[b].total - allData[a].total)
+      .slice(0, 10);
+    setSuggestions(filteredSuggestions);
   };
   return (
     <div
@@ -51,33 +43,29 @@ function InputAutoComplete({
         className={`text-black z-50  w-full  h-14 ${
           inputValue ? "rounded-t-xl" : "rounded-xl"
         }  p-2  focus:outline-none text-right `}
-        onKeyDown={handleKeyDown as KeyboardEventHandler<HTMLInputElement>}
+        onKeyDown={handleKeyDown}
       />
-      {inputValue ? (
+      {inputValue && suggestions.length ? (
         <ol
-          className={`h-[250%] overflow-auto w-full z-50 transition-all absolute -bottom-[250%] duration-500 ease-in  bg-white focus:border-2 border-white mx-auto  ${
+          className={`h-[250%] overflow-auto w-full z-50 transition-all absolute -bottom-[250%] duration-500 ease-in  bg-white focus:border-2 border-white mx-auto space-y-1  ${
             inputValue ? "rounded-b-xl" : "rounded-xl"
           }`}
         >
-          {inputValue &&
-            suggestions?.map((suggestion) => {
-              return (
-                <li
-                  className="flex gap-x-4 justify-between px-2"
-                  key={suggestion}
+          {suggestions.map((suggestion) => {
+            return (
+              <li key={suggestion} className="w-full">
+                <button
+                  className="flex gap-x-4 justify-between px-2 w-full hover:bg-gray-200 rounded transition"
+                  onClick={() => nameSelectCallback(suggestion)}
                 >
-                  <span
-                    className=""
-                    onClick={() => nameSelectCallback(suggestion)}
-                  >
-                    {suggestion}
-                  </span>
+                  <span>{suggestion}</span>
                   <span className="text-gray-500">
-                    {data[suggestion]?.total}
+                    {allData[suggestion]?.total}
                   </span>
-                </li>
-              );
-            })}
+                </button>
+              </li>
+            );
+          })}
         </ol>
       ) : null}
     </div>

@@ -6,6 +6,7 @@ import { Percent } from "@/types/types";
 function BothBars({ percent }: { percent: Percent }) {
   const malePercent = `${Number(percent[0]) - 100}%`;
   const femalePercent = `${Number(percent[1]) - 100}%`;
+
   const fillerStyles = {
     height: "100%",
     width: percent[0] > percent[1] ? `110%` : `100%`,
@@ -14,7 +15,7 @@ function BothBars({ percent }: { percent: Percent }) {
     backgroundColor: "#0099FF",
     borderRadius: "inherit",
     left: percent[0] ? malePercent : "-100%",
-    zIndex: percent[0] > percent[1] ? `999` : `1`,
+    zIndex: percent[0] > percent[1] ? `10` : `1`,
   } as any;
 
   const fillerStylesFemale = {
@@ -25,7 +26,7 @@ function BothBars({ percent }: { percent: Percent }) {
     backgroundColor: "#FA2469",
     borderRadius: "inherit",
     right: percent[1] ? femalePercent : "-100%",
-    zIndex: percent[1] > percent[0] ? `999` : `1`,
+    zIndex: percent[1] > percent[0] ? `10` : `1`,
   } as any;
 
   return (
@@ -37,9 +38,6 @@ function BothBars({ percent }: { percent: Percent }) {
             : Number(percent[0])
         }
       />
-      {/* <span className="z-[999999] text-2xl font-semibold grid justify-center items-center">
-        {percent[1] > percent[0] ? percent[1] : percent[0]}
-      </span> */}
       <div style={fillerStyles}></div>
       <div style={fillerStylesFemale}></div>
     </div>

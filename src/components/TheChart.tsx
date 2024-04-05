@@ -1,22 +1,20 @@
 "use client";
-import { AllNames } from "@/types/types";
 import { highestNumber } from "@/utils/functions";
-import { useSearchParams } from "next/navigation";
 import DashedBorder from "./DashedBorder";
 import SingleBar from "./SingleBar";
+import { useAppState } from "@/store/hooks";
 
-function TheChart({ chartData }: { chartData: AllNames }) {
-  const searchParams = useSearchParams();
-  const nameParam = searchParams.get("name") ?? ("" as string);
+function TheChart() {
+  const { currentName, allData: data } = useAppState();
 
   const femaleData =
-    chartData[nameParam]?.female != null
-      ? chartData[nameParam]?.female?.amounts
+    data[currentName]?.female != null
+      ? data[currentName]?.female?.amounts
       : ([] as number[] | any);
 
   const maleData =
-    chartData[nameParam]?.male != null
-      ? chartData[nameParam]?.male?.amounts
+    data[currentName]?.male != null
+      ? data[currentName]?.male?.amounts
       : ([] as number[] | any);
 
   const heighest =
