@@ -14,20 +14,20 @@ const createName = (jsonData) => {
   const femaleData =
     jsonData.gender === "f"
       ? {
-          count,
-          yearsObj,
-          allYears,
-          amounts,
-        }
+        count,
+        yearsObj,
+        allYears,
+        amounts,
+      }
       : null;
   const maleData =
     jsonData.gender === "m"
       ? {
-          count,
-          yearsObj,
-          allYears,
-          amounts,
-        }
+        count,
+        yearsObj,
+        allYears,
+        amounts,
+      }
       : null;
 
   return {
@@ -38,31 +38,31 @@ const createName = (jsonData) => {
   };
 };
 
-const makeData = async () => {
-  const jsonData = await Promise.all([
-    promises.readFile(process.cwd() + "/data/jf.json", "utf8"),
-    promises.readFile(process.cwd() + "/data/jm.json", "utf8"),
-  ]);
-  const data = jsonData.map((item) => JSON.parse(item)).flat();
-  const allNames = [];
-  const allData = data.reduce((acc, curr) => {
-    const name = createName(curr);
+// const makeData = async () => {
+//   const jsonData = await Promise.all([
+//     promises.readFile(process.cwd() + "/data/jf.json", "utf8"),
+//     promises.readFile(process.cwd() + "/data/jm.json", "utf8"),
+//   ]);
+//   const data = jsonData.map((item) => JSON.parse(item)).flat();
+//   const allNames = [];
+//   const allData = data.reduce((acc, curr) => {
+//     const name = createName(curr);
 
-    if (acc[curr.first_name]) {
-      acc[curr.first_name] = {
-        ...acc[curr.first_name],
-        male: name.male,
-        total: acc[curr.first_name].total + name.total,
-      };
-      return acc;
-    }
-    allNames.push(curr.first_name);
-    acc[curr.first_name] = name;
-    return acc;
-  }, {});
+//     if (acc[curr.first_name]) {
+//       acc[curr.first_name] = {
+//         ...acc[curr.first_name],
+//         male: name.male,
+//         total: acc[curr.first_name].total + name.total,
+//       };
+//       return acc;
+//     }
+//     allNames.push(curr.first_name);
+//     acc[curr.first_name] = name;
+//     return acc;
+//   }, {});
 
-  return { allData, names: allNames };
-};
+//   return { allData, names: allNames };
+// };
 
 const make = async () => {
   const { allData, names } = await makeData();
@@ -80,4 +80,4 @@ const make = async () => {
   console.log(`data genreate: click here to sew the data src/store/data.ts`);
 };
 
-make();
+// make();
